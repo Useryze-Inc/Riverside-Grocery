@@ -1,0 +1,815 @@
+/* ==========================================================================
+   Riverside Grocery | styles.css
+
+   Contents
+     1  Design tokens + base
+     2  Buttons
+     3  Header
+     4  Hero
+     5  Highlight strip
+     6  Product cards
+     7  Store story
+     8  Visit / map
+     9  Closing CTA
+     10 Footer
+     11 Floating call button
+     12 Scroll-reveal initial state
+     13 Responsive (980px / 760px) + reduced motion
+
+   Images live in ../assets/images/<section>/. Replace a file, keep its name.
+   ========================================================================== */
+
+
+/* 1 DESIGN TOKENS + BASE ---------------------------------------------------
+   Edit colours, spacing and easing here. */
+:root {
+  --blue: #0b4fb8;
+  --blue-2: #0a3f96;
+  --navy: #061f4d;
+  --navy-2: #04153a;
+  --sky: #4aa3ff;
+  --ink: #0b1b3d;
+  --muted: #5b6784;
+  --line: #dfe6f2;
+  --paper: #f3f6fb;
+
+  /* Header uses the Useryze navy */
+  --brand-navy: #080b53;
+
+  --gutter: clamp(20px, 4vw, 40px);
+  --section-y: clamp(64px, 9vw, 120px);
+  --content-w: 1180px;
+  --ease: cubic-bezier(.22, .61, .36, 1);
+}
+
+* { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 84px; /* keeps anchored sections clear of the sticky header */
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Geist', system-ui, sans-serif;
+  color: var(--ink);
+  background: #fff;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+img { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+
+h1, h2, h3, h4, p { margin: 0; }
+h1, h2, h3 { text-wrap: balance; }
+p { text-wrap: pretty; }
+
+/* Shared content width: every section aligns to this */
+.wrap {
+  max-width: var(--content-w);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.accent { color: var(--sky); }
+
+/* Keyboard focus ring */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--sky);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+.btn:focus-visible,
+.hd-cta:focus-visible,
+.hd-burger:focus-visible,
+.float:focus-visible { border-radius: 99px; }
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--blue);
+}
+.eyebrow.light { color: #bcd6ff; }
+.eyebrow i {
+  display: block;
+  width: 44px;
+  height: 1px;
+  background: currentColor;
+  opacity: .5;
+}
+
+
+/* 2 BUTTONS --------------------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 26px;
+  border-radius: 99px;
+  font-weight: 600;
+  font-size: 15px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+  font-family: inherit;
+  transition:
+    background .25s var(--ease),
+    color .25s var(--ease),
+    transform .15s,
+    box-shadow .25s var(--ease),
+    border-color .25s;
+}
+.btn svg { flex: 0 0 auto; transition: transform .25s var(--ease); }
+.btn:hover svg { transform: translateX(2px); }
+.btn:active { transform: translateY(1px); }
+
+/* White pill on dark photos */
+.btn-white {
+  background: #fff;
+  color: var(--blue);
+  box-shadow: 0 16px 34px -16px rgba(0, 0, 0, .5);
+}
+.btn-white:hover {
+  background: #eaf2ff;
+  box-shadow: 0 22px 40px -16px rgba(0, 0, 0, .55);
+}
+
+/* Solid blue pill on light backgrounds */
+.btn-blue {
+  background: var(--blue);
+  color: #fff;
+  box-shadow: 0 16px 34px -16px rgba(11, 79, 184, .7);
+}
+.btn-blue:hover { background: var(--blue-2); }
+
+/* Outline pill on dark photos */
+.btn-ghost {
+  background: rgba(255, 255, 255, .06);
+  color: #fff;
+  border-color: rgba(255, 255, 255, .4);
+}
+.btn-ghost:hover { background: #fff; color: var(--blue); }
+
+/* Blue pill with a light outline, paired with .btn-white in the hero */
+.btn-call {
+  background: var(--blue);
+  color: #fff;
+  border-color: rgba(255, 255, 255, .28);
+}
+.btn-call:hover { background: #fff; color: var(--blue); }
+
+
+/* 3 HEADER -----------------------------------------------------------------
+   Mirrors the Useryze site header: frosted bar, links + navy pill CTA,
+   slide-down drawer under 960px. */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(245, 245, 251, .88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(8, 11, 83, .06);
+  transition: box-shadow .3s;
+}
+.site-header.scrolled { box-shadow: 0 10px 30px -24px rgba(8, 11, 83, .35); }
+
+.hd {
+  max-width: var(--content-w);
+  margin: 0 auto;
+  padding: 14px var(--gutter);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.hd-logo img { height: 40px; width: auto; border-radius: 3px; }
+.hd-right { display: flex; align-items: center; gap: 30px; }
+
+.menu { display: flex; align-items: center; gap: 30px; }
+.menu a {
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+  transition: color .15s;
+}
+.menu a:hover { color: var(--brand-navy); }
+.menu a.on { color: var(--brand-navy); font-weight: 600; }
+
+.hd-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 22px;
+  border: 1px solid var(--brand-navy);
+  background: var(--brand-navy);
+  color: #fff;
+  font-size: 13.5px;
+  font-weight: 600;
+  border-radius: 99px;
+  box-shadow: 0 10px 24px -16px rgba(8, 11, 83, .7);
+  transition: background .15s, color .15s, transform .12s;
+}
+.hd-cta:hover { background: #0d1559; color: #fff; }
+.hd-cta:active { transform: translateY(1px); }
+/* Full-width variant inside the mobile drawer */
+.hd-cta.block {
+  display: flex;
+  margin-top: 16px;
+  padding: 14px 22px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.hd-burger {
+  display: none;
+  width: 42px;
+  height: 42px;
+  border-radius: 99px;
+  border: 1px solid rgba(8, 11, 83, .18);
+  background: #fff;
+  color: var(--brand-navy);
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+}
+.hd-burger .i-close { display: none; }
+.hd-burger[aria-expanded="true"] .i-open { display: none; }
+.hd-burger[aria-expanded="true"] .i-close { display: block; }
+
+.hd-drawer {
+  border-top: 1px solid rgba(8, 11, 83, .06);
+  background: rgba(255, 255, 255, .96);
+  padding: 16px var(--gutter) 24px;
+}
+.hd-drawer nav { display: flex; flex-direction: column; gap: 4px; }
+.hd-drawer nav a {
+  padding: 12px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--brand-navy);
+  border-bottom: 1px solid rgba(8, 11, 83, .06);
+}
+
+@media (max-width: 960px) {
+  .hd-right { display: none; }
+  .hd-burger { display: inline-flex; }
+}
+
+
+/* 4 HERO -------------------------------------------------------------------
+   Storefront photo covers the section; gradient overlay keeps text readable. */
+.hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: clamp(500px, 46vw, 660px);
+  background: var(--navy) url(../assets/images/hero/storefront-banner.png) right center / cover no-repeat;
+  color: #fff;
+  overflow: hidden;
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg,
+    rgba(6, 31, 77, .86) 0%,
+    rgba(6, 31, 77, .66) 38%,
+    rgba(6, 31, 77, .12) 66%,
+    rgba(6, 31, 77, 0) 100%);
+  pointer-events: none;
+}
+.hero .wrap {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding-top: clamp(48px, 6vw, 84px);
+  padding-bottom: clamp(48px, 6vw, 84px);
+}
+.hero .wrap > div { max-width: 520px; }
+
+.hero h1 {
+  margin-top: 22px;
+  font-size: clamp(42px, 5.4vw, 76px);
+  line-height: 1.02;
+  letter-spacing: -.03em;
+  font-weight: 700;
+}
+.hero h1 .accent { display: block; }
+
+.hero .lead {
+  margin-top: 22px;
+  max-width: 440px;
+  font-size: 17px;
+  line-height: 1.6;
+  color: #d4e3ff;
+}
+.hero .actions {
+  margin-top: 32px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.hero .addr {
+  margin-top: 26px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: #cfe0ff;
+}
+
+
+/* 5 HIGHLIGHT STRIP ------------------------------------------------------- */
+.strip {
+  background: var(--paper);
+  border-bottom: 1px solid var(--line);
+}
+.strip .wrap {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+.strip .it {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 12px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--ink);
+  border-left: 1px solid var(--line);
+  transition: transform .3s var(--ease);
+}
+.strip .it:first-child { border-left: none; }
+.strip .it:hover { transform: translateY(-3px); }
+.strip svg { color: var(--blue); }
+
+
+/* 6 PRODUCT CARDS --------------------------------------------------------- */
+.sec { padding: var(--section-y) 0; }
+.sec h2 {
+  margin-top: 14px;
+  font-size: clamp(32px, 3.8vw, 52px);
+  line-height: 1.06;
+  letter-spacing: -.028em;
+  font-weight: 700;
+  color: var(--blue-2);
+}
+
+.cards {
+  margin-top: 44px;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 18px;
+}
+.card {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  overflow: hidden;
+  transition:
+    transform .35s var(--ease),
+    box-shadow .35s var(--ease),
+    border-color .3s;
+}
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 34px 60px -34px rgba(6, 31, 77, .4);
+  border-color: #c9d8f0;
+}
+.card .ph {
+  aspect-ratio: 118 / 93;
+  overflow: hidden;
+  background: var(--line);
+}
+.card .ph img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .7s var(--ease);
+}
+.card:hover .ph img { transform: scale(1.06); }
+.card .tx { padding: 18px 18px 22px; }
+.card h3 {
+  font-size: 16.5px;
+  font-weight: 700;
+  letter-spacing: -.01em;
+  color: var(--blue-2);
+}
+.card p {
+  margin-top: 8px;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+
+/* 7 STORE STORY ------------------------------------------------------------
+   Interior photo covers the section (with parallax, see main.js);
+   gradient overlay under the text. */
+.split {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: clamp(520px, 46vw, 660px);
+  background: #062a6b;
+  color: #fff;
+  overflow: hidden;
+}
+/* Oversized vertically so the parallax never shows an edge */
+.split-bg {
+  position: absolute;
+  left: 0;
+  top: -6%;
+  width: 100%;
+  height: 112%;
+  object-fit: cover;
+  object-position: center;
+  will-change: transform;
+}
+.split::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(90deg,
+    rgba(6, 31, 77, .9) 0%,
+    rgba(6, 31, 77, .72) 38%,
+    rgba(6, 31, 77, .18) 68%,
+    rgba(6, 31, 77, .05) 100%);
+}
+.split .wrap {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  padding-top: clamp(56px, 7vw, 96px);
+  padding-bottom: clamp(56px, 7vw, 96px);
+}
+.split-copy {
+  max-width: 520px;
+  display: flex;
+  flex-direction: column;
+}
+.split h2 {
+  margin-top: 20px;
+  font-size: clamp(34px, 4vw, 56px);
+  line-height: 1.04;
+  letter-spacing: -.03em;
+  font-weight: 700;
+  color: #fff;
+}
+.split h2 .accent { display: block; }
+.split p {
+  margin-top: 22px;
+  max-width: 460px;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #dbe7ff;
+}
+.split .btn { margin-top: 30px; align-self: flex-start; }
+
+
+/* 8 VISIT / MAP ----------------------------------------------------------- */
+.visit {
+  display: grid;
+  grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+  gap: clamp(28px, 5vw, 64px);
+  align-items: center;
+  margin-top: 36px;
+}
+.info { display: flex; flex-direction: column; gap: 26px; }
+.row {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--ink);
+}
+.row .ic {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  background: #e8f0ff;
+  color: var(--blue);
+  transition: background .25s, color .25s;
+}
+.row:hover .ic { background: var(--blue); color: #fff; }
+.row address { font-style: normal; }
+
+.map {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: #e9eef7;
+  box-shadow: 0 34px 60px -40px rgba(6, 31, 77, .45);
+}
+/* Shown behind the iframe, so the box is never blank if the embed can't load */
+.map-fallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 20px;
+  text-align: center;
+  font-weight: 600;
+  color: var(--blue-2);
+  background:
+    linear-gradient(var(--line) 1px, transparent 1px) 0 0 / 100% 48px,
+    linear-gradient(90deg, var(--line) 1px, transparent 1px) 0 0 / 48px 100%,
+    #e9eef7;
+}
+.map-fallback svg { color: var(--blue); }
+.map iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+
+/* 9 CLOSING CTA ------------------------------------------------------------
+   Basket photo covers the section; gradient overlay under the text.
+   Fixed at 560px tall on desktop (per design); grows on phones (see 12). */
+.cta {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 560px;
+  background: var(--navy-2) url(../assets/images/cta/basket-banner.png) right center / cover no-repeat;
+  color: #fff;
+  overflow: hidden;
+}
+.cta::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg,
+    rgba(4, 21, 58, .82) 0%,
+    rgba(4, 21, 58, .6) 45%,
+    rgba(4, 21, 58, 0) 72%);
+  pointer-events: none;
+}
+.cta .wrap {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding-top: clamp(44px, 6vw, 72px);
+  padding-bottom: clamp(44px, 6vw, 72px);
+}
+.cta h2 {
+  margin-top: 14px;
+  font-size: clamp(30px, 3.6vw, 48px);
+  line-height: 1.06;
+  letter-spacing: -.028em;
+  font-weight: 700;
+}
+.cta p {
+  margin-top: 12px;
+  max-width: 460px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #cfe0ff;
+}
+.cta .btn { margin-top: 26px; }
+
+
+/* 10 FOOTER --------------------------------------------------------------- */
+footer {
+  background: #fff;
+  border-top: 1px solid var(--line);
+}
+footer .wrap {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 28px;
+  align-items: center;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+footer img { height: 46px; width: auto; border-radius: 3px; }
+footer nav {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #2c3a5c;
+}
+footer nav a:hover,
+footer .ph:hover { color: var(--blue); }
+footer .ph {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--blue-2);
+  transition: color .2s;
+}
+footer .copy {
+  grid-column: 1 / -1;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+  text-align: center;
+  font-size: 12px;
+  color: #8793ad;
+}
+
+
+/* 11 FLOATING CALL BUTTON --------------------------------------------------
+   Hidden until past the hero, collapses to the icon further down,
+   expands again on hover. States are toggled in main.js. */
+.float {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 60;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 8px 8px 20px;
+  border-radius: 99px;
+  background: rgba(255, 255, 255, .94);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(6, 31, 77, .1);
+  box-shadow: 0 24px 40px -22px rgba(6, 31, 77, .4);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--blue-2);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(16px);
+  transition:
+    opacity .35s var(--ease),
+    transform .35s var(--ease),
+    padding .35s var(--ease),
+    gap .35s var(--ease);
+}
+.float.show { opacity: 1; pointer-events: auto; transform: none; }
+.float .t {
+  max-width: 120px;
+  overflow: hidden;
+  white-space: nowrap;
+  transition: max-width .35s var(--ease), opacity .25s;
+}
+.float.collapsed:not(:hover) { gap: 0; padding: 8px; }
+.float.collapsed:not(:hover) .t { max-width: 0; opacity: 0; }
+.float .ic {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 99px;
+  background: var(--blue);
+  color: #fff;
+}
+.float .ic svg { will-change: transform; }
+
+
+/* 12 SCROLL-REVEAL INITIAL STATE -------------------------------------------
+   Only applies when <html> has .js (set in index.html when GSAP loaded and
+   the visitor hasn't asked for reduced motion), so content never stays
+   hidden if scripts fail. */
+.js [data-r] { opacity: 0; transform: translateY(26px); }
+
+
+/* 13 RESPONSIVE ----------------------------------------------------------- */
+@media (max-width: 980px) {
+  .hero { background-position: 70% center; }
+  .hero::before {
+    background: linear-gradient(90deg,
+      rgba(6, 31, 77, .9) 0%,
+      rgba(6, 31, 77, .74) 48%,
+      rgba(6, 31, 77, .2) 85%);
+  }
+  .hero .wrap > div { max-width: 460px; }
+
+  .split::before {
+    background: linear-gradient(90deg,
+      rgba(6, 31, 77, .9) 0%,
+      rgba(6, 31, 77, .76) 50%,
+      rgba(6, 31, 77, .3) 100%);
+  }
+
+  .cta::before {
+    background: linear-gradient(90deg,
+      rgba(4, 21, 58, .88) 0%,
+      rgba(4, 21, 58, .66) 55%,
+      rgba(4, 21, 58, .1) 90%);
+  }
+
+  /* Cards: 3 on top, 2 centred below */
+  .cards { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .cards .card { grid-column: span 2; }
+  .cards .card:nth-child(4) { grid-column: 2 / 4; }
+  .cards .card:nth-child(5) { grid-column: 4 / 6; }
+
+  .visit { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 760px) {
+  .hd-logo img { height: 36px; }
+
+  /* Highlights: 3 + 2 */
+  .strip .wrap {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 22px 0;
+    padding-top: 26px;
+    padding-bottom: 26px;
+  }
+  .strip .it { grid-column: span 2; padding: 6px 4px; font-size: 13px; }
+  /* Second row (2 items) sits centred under the first row's 3 */
+  .strip .it:nth-child(4) { grid-column: 2 / 4; border-left: none; }
+  .strip .it:nth-child(5) { grid-column: 4 / 6; }
+
+  /* Cards: 2 columns, last card spans full width */
+  .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+  .cards .card,
+  .cards .card:nth-child(4) { grid-column: auto; }
+  .cards .card:nth-child(5) { grid-column: 1 / -1; }
+  .cards .card:nth-child(5) .ph { aspect-ratio: 2 / 1; }
+  .card .tx { padding: 14px 14px 18px; }
+  .card h3 { font-size: 15px; }
+  .card p { font-size: 12.5px; }
+
+  /* Photo sections: text on top over a vertical fade */
+  .hero { min-height: 620px; background-position: 74% center; }
+  .hero::before {
+    background: linear-gradient(180deg,
+      rgba(6, 31, 77, .88) 0%,
+      rgba(6, 31, 77, .72) 55%,
+      rgba(6, 31, 77, .4) 100%);
+  }
+  .hero .actions .btn { flex: 1 1 0; padding: 14px 12px; }
+
+  .split { min-height: 560px; }
+  .split-bg { object-position: 65% center; }
+  .split::before {
+    background: linear-gradient(180deg,
+      rgba(6, 31, 77, .88) 0%,
+      rgba(6, 31, 77, .72) 60%,
+      rgba(6, 31, 77, .5) 100%);
+  }
+
+  /* Let the CTA grow past 560px so text never overflows on narrow phones */
+  .cta {
+    height: auto;
+    min-height: 560px;
+    align-items: flex-start;
+    background-position: 92% center;
+  }
+  .cta::before {
+    background: linear-gradient(180deg,
+      rgba(4, 21, 58, .9) 0%,
+      rgba(4, 21, 58, .72) 50%,
+      rgba(4, 21, 58, .15) 100%);
+  }
+
+  .row { font-size: 16px; }
+  .map { aspect-ratio: 4 / 3; }
+
+  footer .wrap {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 18px;
+    text-align: center;
+  }
+  footer nav { gap: 22px; flex-wrap: wrap; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .js [data-r] { opacity: 1; transform: none; }
+  * { transition-duration: .01ms !important; }
+}

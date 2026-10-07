@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Riverside Grocery | Your Neighborhood Grocery Store</title>
+  <meta name="description" content="Groceries, snacks, drinks and everyday essentials, open 24 hours at 1727 E Riverside Dr, Austin, TX 78741.">
+  <link rel="icon" href="assets/images/brand/logo.png">
+
+  <!-- Fonts: Geist (UI + headings), JetBrains Mono (eyebrow labels) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- GSAP for scroll reveals + parallax (see js/main.js) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <!-- Enable reveal animations before first paint, only if GSAP loaded and motion is allowed -->
+  <script>
+    if (window.gsap && window.ScrollTrigger && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.documentElement.classList.add('js');
+    }
+  </script>
+</head>
+<body>
+
+  <!-- ================================================================
+       HEADER: Useryze header layout (logo left, links + pill CTA right,
+       slide-down drawer under 960px). css > 3 HEADER
+       ================================================================ -->
+  <header class="site-header" id="nav">
+    <div class="hd">
+      <a class="hd-logo" href="#top" aria-label="Riverside Grocery home">
+        <img src="assets/images/brand/logo.png" alt="Riverside Grocery" width="148" height="50">
+      </a>
+
+      <div class="hd-right">
+        <nav class="menu" aria-label="Main">
+          <a class="on" href="#top">Home</a>
+          <a href="#offer">What We Offer</a>
+          <a href="#store">Our Store</a>
+          <a href="#location">Location</a>
+        </nav>
+        <a class="hd-cta" href="tel:+15124442297">Call Us</a>
+      </div>
+
+      <button class="hd-burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="drawer">
+        <svg class="i-open" width="18" height="14" viewBox="0 0 18 14" aria-hidden="true"><path d="M1 2H17M1 7H17M1 12H17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        <svg class="i-close" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 3L11 11M11 3L3 11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+
+    <div class="hd-drawer" id="drawer" hidden>
+      <nav aria-label="Mobile">
+        <a href="#top">Home</a>
+        <a href="#offer">What We Offer</a>
+        <a href="#store">Our Store</a>
+        <a href="#location">Location</a>
+      </nav>
+      <a class="hd-cta block" href="tel:+15124442297">Call Us</a>
+    </div>
+  </header>
+
+
+  <main id="top">
+
+    <!-- ================================================================
+         HERO: storefront photo covers the section, soft gradient under
+         the text. Photo: assets/images/hero/storefront-banner.png
+         css > 4 HERO
+         ================================================================ -->
+    <section class="hero">
+      <div class="wrap">
+        <div>
+          <span class="eyebrow light" data-r>Open 24 hours<i></i></span>
+          <h1 data-r>Your Neighborhood <span class="accent">Grocery Store</span></h1>
+          <p class="lead" data-r>Groceries, snacks, drinks and everyday essentials, all in one convenient stop. We're here for you, anytime.</p>
+
+          <div class="actions" data-r>
+            <a class="btn btn-white" href="https://www.google.com/maps/dir/?api=1&amp;destination=1727+E+Riverside+Dr+Austin+TX+78741" target="_blank" rel="noopener">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>
+              Get Directions
+            </a>
+            <a class="btn btn-call" href="tel:+15124442297">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.6a1 1 0 0 1-.25 1z"/></svg>
+              Call Us
+            </a>
+          </div>
+
+          <div class="addr" data-r>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>
+            1727 E Riverside Dr, Austin, TX 78741
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ================================================================
+         HIGHLIGHT STRIP: five quick benefits. css > 5 HIGHLIGHT STRIP
+         ================================================================ -->
+    <section class="strip" aria-label="Highlights">
+      <div class="wrap">
+        <div class="it" data-r>
+          <svg width="44" height="44" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M40 24a16 16 0 1 1-6-12.5M34 6v6h-6"/><text x="24" y="29" text-anchor="middle" font-size="13" font-weight="700" fill="currentColor" stroke="none" font-family="Geist,sans-serif">24</text></svg>
+          Open<br>24 Hours
+        </div>
+        <div class="it" data-r>
+          <svg width="44" height="44" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h6l5 22h20l4-15H13"/><circle cx="19" cy="38" r="2.5"/><circle cx="34" cy="38" r="2.5"/><path d="M20 20h14M21 25h12"/></svg>
+          Everyday<br>Groceries
+        </div>
+        <div class="it" data-r>
+          <svg width="44" height="44" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16h24l-3 25H15zM11 16l2-5h22l2 5M26 11l4-6h4"/><path d="M14 24h20"/></svg>
+          Snacks<br>&amp; Drinks
+        </div>
+        <div class="it" data-r>
+          <svg width="44" height="44" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 20h38l-4 20H9zM16 20l6-12M32 20l-6-12M17 28v6M24 28v6M31 28v6"/></svg>
+          Convenience<br>Essentials
+        </div>
+        <div class="it" data-r>
+          <svg width="44" height="44" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 14h22v26H11zM33 18h5a3 3 0 0 1 3 3v9a3 3 0 0 1-3 3h-5M17 22v12M22 22v12M27 22v12M11 14c0-5 5-8 8-5 2-4 8-4 9 0 3-2 5 1 5 5"/></svg>
+          Beer &amp;<br>More
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ================================================================
+         WHAT YOU'LL FIND: product category cards. Edit text/images per
+         card; photos in assets/images/categories/. css > 6 PRODUCT CARDS
+         ================================================================ -->
+    <section class="sec" id="offer">
+      <div class="wrap">
+        <span class="eyebrow" data-r>Everything you need</span>
+        <h2 data-r>What You'll <span class="accent">Find</span></h2>
+
+        <div class="cards">
+          <article class="card" data-r>
+            <div class="ph"><img src="assets/images/categories/groceries.png" alt="Fresh groceries aisle" loading="lazy" width="295" height="233"></div>
+            <div class="tx">
+              <h3>Everyday Groceries</h3>
+              <p>Stock up on the essentials you need for home.</p>
+            </div>
+          </article>
+          <article class="card" data-r>
+            <div class="ph"><img src="assets/images/categories/snacks.png" alt="Shelves of chips and snacks" loading="lazy" width="295" height="233"></div>
+            <div class="tx">
+              <h3>Snacks &amp; Treats</h3>
+              <p>Grab something quick for the road or whenever you're craving a snack.</p>
+            </div>
+          </article>
+          <article class="card" data-r>
+            <div class="ph"><img src="assets/images/categories/cold-drinks.png" alt="Cold drinks cooler" loading="lazy" width="295" height="233"></div>
+            <div class="tx">
+              <h3>Cold Drinks</h3>
+              <p>A wide selection of refreshing drinks, always available.</p>
+            </div>
+          </article>
+          <article class="card" data-r>
+            <div class="ph"><img src="assets/images/categories/convenience.png" alt="Household convenience items" loading="lazy" width="295" height="233"></div>
+            <div class="tx">
+              <h3>Convenience Items</h3>
+              <p>Quick, easy essentials for your everyday needs.</p>
+            </div>
+          </article>
+          <article class="card" data-r>
+            <div class="ph"><img src="assets/images/categories/beer.png" alt="Beer and beverages" loading="lazy" width="295" height="233"></div>
+            <div class="tx">
+              <h3>Beer &amp; More</h3>
+              <p>A convenient stop for your favorite beverages and more.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ================================================================
+         STORE STORY: interior photo covers the section (parallax in
+         main.js), soft gradient under the text. css > 7 STORE STORY
+         ================================================================ -->
+    <section class="split" id="store">
+      <img class="split-bg" id="storeImg" src="assets/images/store/interior.png" alt="" loading="lazy" width="925" height="835">
+      <div class="wrap">
+        <div class="split-copy">
+          <span class="eyebrow light" data-r>Your local grocery store</span>
+          <h2 data-r>Convenient. Familiar. <span class="accent">Right around the corner.</span></h2>
+          <p data-r>Riverside Grocery is your neighborhood stop for everyday essentials, quick snacks, cold drinks and more. Whether you're picking up something on the way home or need a quick stop at any hour, we're here when you need us.</p>
+          <a class="btn btn-ghost" href="#location" data-r>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            OPEN 24 HOURS
+          </a>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ================================================================
+         VISIT US: address, hours, phone and live Google map.
+         css > 8 VISIT / MAP
+         ================================================================ -->
+    <section class="sec" id="location">
+      <div class="wrap">
+        <span class="eyebrow" data-r>Find us here</span>
+        <h2 data-r>Visit Riverside <span class="accent">Grocery</span></h2>
+
+        <div class="visit">
+          <div class="info">
+            <div class="row" data-r>
+              <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg></span>
+              <address>1727 E Riverside Dr,<br>Austin, TX 78741</address>
+            </div>
+            <div class="row" data-r>
+              <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+              <div>Open 24 Hours</div>
+            </div>
+            <a class="row" href="tel:+15124442297" data-r>
+              <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.6a1 1 0 0 1-.25 1z"/></svg></span>
+              <div>Call Us<br>(512) 444-2297</div>
+            </a>
+            <div data-r>
+              <a class="btn btn-blue" href="https://www.google.com/maps/dir/?api=1&amp;destination=1727+E+Riverside+Dr+Austin+TX+78741" target="_blank" rel="noopener">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>
+                Get Directions
+              </a>
+            </div>
+          </div>
+
+          <div class="map" data-r>
+            <!-- Fallback layer: visible only if the Google embed doesn't load -->
+            <div class="map-fallback">
+              <svg width="34" height="34" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>
+              <span>1727 E Riverside Dr, Austin, TX 78741</span>
+              <a class="btn btn-blue" href="https://www.google.com/maps/search/?api=1&amp;query=1727+E+Riverside+Dr+Austin+TX+78741" target="_blank" rel="noopener">Open in Google Maps</a>
+            </div>
+            <iframe title="Map of Riverside Grocery, 1727 E Riverside Dr, Austin TX" src="https://maps.google.com/maps?q=1727+E+Riverside+Dr,+Austin,+TX+78741&amp;z=15&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ================================================================
+         CLOSING CTA: basket photo covers the section, soft gradient under
+         the text. Photo: assets/images/cta/basket-banner.png
+         560px tall on desktop. css > 9 CLOSING CTA
+         ================================================================ -->
+    <section class="cta">
+      <div class="wrap">
+        <div>
+          <span class="eyebrow light" data-r>Need something quick?</span>
+          <h2 data-r>Stop by Riverside <span class="accent">Grocery today.</span></h2>
+          <p data-r>Everyday essentials, snacks, drinks and more, conveniently located on E Riverside Dr.</p>
+          <a class="btn btn-white" href="https://www.google.com/maps/dir/?api=1&amp;destination=1727+E+Riverside+Dr+Austin+TX+78741" target="_blank" rel="noopener" data-r>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>
+            Get Directions
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- ==================================================================
+       FOOTER. css > 10 FOOTER
+       ================================================================== -->
+  <footer>
+    <div class="wrap">
+      <a href="#top" aria-label="Riverside Grocery home">
+        <img src="assets/images/brand/logo.png" alt="Riverside Grocery" width="138" height="46">
+      </a>
+      <nav aria-label="Footer">
+        <a href="#top">Home</a>
+        <a href="#offer">What We Offer</a>
+        <a href="#location">Location</a>
+      </nav>
+      <a class="ph" href="tel:+15124442297">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.6a1 1 0 0 1-.25 1z"/></svg>
+        (512) 444-2297
+      </a>
+      <div class="copy">© 2024 Riverside Grocery. All rights reserved. &nbsp;|&nbsp; 1727 E Riverside Dr, Austin, TX 78741 &nbsp;|&nbsp; Open 24 Hours</div>
+    </div>
+  </footer>
+
+
+  <!-- FLOATING CALL BUTTON: appears after the hero, collapses on scroll,
+       expands on hover. css > 11, js/main.js > 1 -->
+  <a class="float" id="float" href="tel:+15124442297" aria-label="Call Riverside Grocery">
+    <span class="t">Call Us</span>
+    <span class="ic"><svg id="floatIc" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.6a1 1 0 0 1-.25 1z"/></svg></span>
+  </a>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
