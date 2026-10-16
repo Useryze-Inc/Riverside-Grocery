@@ -19,6 +19,25 @@
   var floatBtn = doc.getElementById('float');
   var floatIcon = doc.getElementById('floatIc');
 
+  /* 0. GA4 CONVERSION EVENTS -----------------------------------------------
+     Send named events for phone and Google Maps link clicks. Page views are
+     sent by the Google tag configured in index.html. */
+  doc.addEventListener('click', function (e) {
+    var link = e.target.closest('a[href]');
+    if (!link || typeof window.gtag !== 'function') return;
+
+    var href = link.getAttribute('href') || '';
+    var eventName = href.indexOf('tel:') === 0 ? 'click_to_call' :
+      (href.indexOf('google.com/maps/') !== -1 ? 'get_directions' : '');
+    if (!eventName) return;
+
+    var region = link.closest('header, main, footer');
+    window.gtag('event', eventName, {
+      link_text: link.textContent.trim().replace(/\s+/g, ' ').slice(0, 100),
+      link_location: region ? region.tagName.toLowerCase() : 'other'
+    });
+  });
+
   /* 1. HEADER SHADOW + FLOATING CALL BUTTON ---------------------------------
      The button appears after the hero, collapses to its icon further down,
      and the phone icon rotates with scroll progress (eased toward target). */
